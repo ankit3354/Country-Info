@@ -11,7 +11,7 @@ function Countrycard({ region, capital, flag, population, name, toggle }) {
       to={`/${name}`}
       className={`card_wrapper overflow-hidden ${
         toggle ? "bg-gray-900" : "bg-zinc-200"
-      } rounded-lg border-2 border-gray-400 w-72 sm:max-w-44 md:max-w-48 lg:max-w-60`}
+      } rounded-lg border-2 border-gray-400 w-72 sm:max-w-44 md:max-w-48 lg:max-w-60 drop-shadow-lg`}
     >
       <div className="card_list ">
         <div className="flex justify-center">

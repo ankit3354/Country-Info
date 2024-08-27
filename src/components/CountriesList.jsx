@@ -4,6 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import { RiEmotionSadLine } from "react-icons/ri";
 import Input from "./Input";
 import SelectionRegion from "./SelectionRegion";
+import CounrtryListShimmer from "./CounrtryListShimmer";
 
 function CountriesList({ query, setQuery }) {
   const [country, setCountry] = useState([]);
@@ -38,13 +39,11 @@ function CountriesList({ query, setQuery }) {
       </div>
     );
 
-  return country === "null" ? (
-    " Loading...."
-  ) : (
+  return (
     <section
       className={`countryCard_Section ${
         toggle ? "bg-gray-900" : "bg-gray-200"
-      } min-h-fit `}
+      } h-fit `}
     >
       <div
         className={`flex ${
@@ -59,25 +58,30 @@ function CountriesList({ query, setQuery }) {
           setFilterdByRegion={setFilterdByRegion}
         />
       </div>
-
-      <div className="Country_Container max-w-screen-lg lg:mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mx-6 max-h-fit pb-10 place-items-center">
-        {filteredByRegion &&
-          filteredByRegion
-            .filter((countries) =>
-              countries.name.common.toLowerCase().includes(query.toLowerCase())
-            )
-            .map((item) => (
-              <Countrycard
-                key={item.name.common}
-                region={item.region}
-                capital={item.capital}
-                flag={item.flags.svg}
-                population={item.population.toLocaleString("en-IN")}
-                name={item.name.common}
-                toggle={toggle}
-              />
-            ))}
-      </div>
+      {!country.length ? (
+        <CounrtryListShimmer />
+      ) : (
+        <div className="Country_Container max-w-screen-lg lg:mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mx-6 min-h-full pb-10 place-items-center">
+          {filteredByRegion &&
+            filteredByRegion
+              .filter((countries) =>
+                countries.name.common
+                  .toLowerCase()
+                  .includes(query.toLowerCase())
+              )
+              .map((item) => (
+                <Countrycard
+                  key={item.name.common}
+                  region={item.region}
+                  capital={item.capital}
+                  flag={item.flags.svg}
+                  population={item.population.toLocaleString("en-IN")}
+                  name={item.name.common}
+                  toggle={toggle}
+                />
+              ))}
+        </div>
+      )}
     </section>
   );
 }
